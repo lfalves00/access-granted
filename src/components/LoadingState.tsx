@@ -28,7 +28,7 @@ export const LoadingState = () => {
 
   return (
     <div className="flex flex-col items-center gap-8 animate-fade-in">
-      {/* Spinner */}
+      {/* Spinner with Bet7k identity */}
       <div className="relative w-16 h-16">
         <svg className="w-16 h-16 animate-spin" viewBox="0 0 64 64" style={{ animationDuration: "1.5s" }}>
           <circle
@@ -46,6 +46,10 @@ export const LoadingState = () => {
             strokeLinecap="round"
           />
         </svg>
+        {/* Bet7k server identity */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-[10px] font-mono font-bold text-primary tracking-tight">B7K</span>
+        </div>
       </div>
 
       {/* Progress */}
