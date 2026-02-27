@@ -11,7 +11,7 @@ export const PostConfirmState = ({ onConfirm }: { onConfirm: () => void }) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div className="flex flex-col items-center gap-6 bg-card border border-border rounded-2xl p-6 shadow-xl shadow-background/50">
       {/* Animated success badge */}
       <div className="relative animate-scale-in">
         <div className="absolute inset-0 rounded-full bg-success/20 animate-ping" style={{ animationDuration: "1.5s", animationIterationCount: "2" }} />
