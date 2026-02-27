@@ -9,7 +9,7 @@ export const IdleState = ({ onActivate }: { onActivate: () => void }) => {
       </div>
 
       {/* Info */}
-      <div className="text-center space-y-2">
+      <div className="text-center space-y-2 flex flex-col items-center">
         <h1 className="text-lg font-semibold text-foreground leading-snug">
           Activa tu cuenta de influenciador en Bet7k
         </h1>
