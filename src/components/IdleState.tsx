@@ -1,20 +1,20 @@
-import { Settings2 } from "lucide-react";
+import bet7kLogo from "@/assets/bet7k-logo.png";
 
 export const IdleState = ({ onActivate }: { onActivate: () => void }) => {
   return (
     <div className="flex flex-col items-center gap-8 animate-fade-in">
-      {/* Icon */}
-      <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center border border-border">
-        <Settings2 className="w-7 h-7 text-primary" />
+      {/* Logo */}
+      <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center border border-border overflow-hidden">
+        <img src={bet7kLogo} alt="" className="w-10 h-10 object-contain" />
       </div>
 
       {/* Info */}
       <div className="text-center space-y-2">
-        <h1 className="text-lg font-semibold text-foreground">
-          Módulo de acceso WL
+        <h1 className="text-lg font-semibold text-foreground leading-snug">
+          Activa tu cuenta de influenciador en Bet7k
         </h1>
         <p className="text-sm text-muted-foreground leading-relaxed max-w-[280px]">
-          Configura tu cuenta con nivel de pago diferenciado antes del registro.
+          Pre-configura nivel de pago diferenciado antes de crear tu cuenta.
         </p>
       </div>
 
