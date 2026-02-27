@@ -10,6 +10,7 @@ type AppState = "idle" | "confirm" | "loading" | "success";
 const Index = () => {
   const [state, setState] = useState<AppState>("idle");
   const [showPostConfirm, setShowPostConfirm] = useState(false);
+  const [modalExiting, setModalExiting] = useState(false);
   const [sessionId] = useState(() => {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     return Array.from({ length: 8 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
@@ -24,8 +25,12 @@ const Index = () => {
   }, []);
 
   const handlePostConfirm = useCallback(() => {
-    setShowPostConfirm(false);
-    setTimeout(() => setState("success"), 300);
+    setModalExiting(true);
+    setTimeout(() => {
+      setShowPostConfirm(false);
+      setModalExiting(false);
+      setState("success");
+    }, 450);
   }, []);
 
   useEffect(() => {
@@ -51,9 +56,9 @@ const Index = () => {
 
       {/* Post-confirm modal overlay */}
       {showPostConfirm && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center animate-overlay-in">
+        <div className={`absolute inset-0 z-50 flex items-center justify-center ${modalExiting ? 'animate-overlay-out' : 'animate-overlay-in'}`}>
           <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
-          <div className="relative z-10 w-full px-5 animate-modal-in">
+          <div className={`relative z-10 w-full px-5 ${modalExiting ? 'animate-modal-out' : 'animate-modal-in'}`}>
             <PostConfirmState onConfirm={handlePostConfirm} />
           </div>
         </div>
