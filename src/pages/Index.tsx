@@ -5,10 +5,11 @@ import { LoadingState } from "@/components/LoadingState";
 import { SuccessState } from "@/components/SuccessState";
 import { PostConfirmState } from "@/components/PostConfirmState";
 
-type AppState = "idle" | "confirm" | "loading" | "post-confirm" | "success";
+type AppState = "idle" | "confirm" | "loading" | "success";
 
 const Index = () => {
   const [state, setState] = useState<AppState>("idle");
+  const [showPostConfirm, setShowPostConfirm] = useState(false);
   const [sessionId] = useState(() => {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     return Array.from({ length: 8 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
@@ -23,18 +24,19 @@ const Index = () => {
   }, []);
 
   const handlePostConfirm = useCallback(() => {
-    setState("success");
+    setShowPostConfirm(false);
+    setTimeout(() => setState("success"), 300);
   }, []);
 
   useEffect(() => {
     if (state === "loading") {
-      const timer = setTimeout(() => setState("post-confirm"), 5700);
+      const timer = setTimeout(() => setShowPostConfirm(true), 5700);
       return () => clearTimeout(timer);
     }
   }, [state]);
 
   return (
-    <div className="flex flex-col min-h-[100dvh] bg-background px-5 py-4 max-w-[430px] mx-auto select-none">
+    <div className="flex flex-col min-h-[100dvh] bg-background px-5 py-4 max-w-[430px] mx-auto select-none relative">
       <StatusBar sessionId={sessionId} />
       <main className="flex-1 flex flex-col justify-center">
         {state === "idle" && <IdleState onActivate={handleActivate} />}
@@ -44,13 +46,18 @@ const Index = () => {
           </div>
         )}
         {state === "loading" && <LoadingState />}
-        {state === "post-confirm" && (
-          <div className="animate-fade-in">
-            <PostConfirmState onConfirm={handlePostConfirm} />
-          </div>
-        )}
         {state === "success" && <SuccessState />}
       </main>
+
+      {/* Post-confirm modal overlay */}
+      {showPostConfirm && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center animate-overlay-in">
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+          <div className="relative z-10 w-full px-5 animate-modal-in">
+            <PostConfirmState onConfirm={handlePostConfirm} />
+          </div>
+        </div>
+      )}
       <footer className="pb-2 pt-4">
         <div className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground/40">
           <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.2a5.8 5.8 0 110 11.6A5.8 5.8 0 018 2.2zm0 1.8a1 1 0 00-1 1v3.6l-2.1 1.2a1 1 0 001 1.7l2.6-1.5A1 1 0 009 9V5a1 1 0 00-1-1z"/></svg>
@@ -63,6 +70,7 @@ const Index = () => {
 
 /* ---------- Confirm State (micro-disclaimers) ---------- */
 import { useState as useS } from "react";
+import bet7kLogo from "@/assets/bet7k-logo.png";
 
 const ConfirmState = ({ onConfirm }: { onConfirm: () => void }) => {
   const [checks, setChecks] = useS([false, false]);
@@ -74,10 +82,8 @@ const ConfirmState = ({ onConfirm }: { onConfirm: () => void }) => {
 
   return (
     <div className="flex flex-col items-center gap-6">
-      <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" strokeWidth="2" strokeLinecap="round">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-        </svg>
+      <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center border border-border overflow-hidden">
+        <img src={bet7kLogo} alt="" className="w-9 h-9 object-contain" />
       </div>
 
       <div className="text-center space-y-1.5">
