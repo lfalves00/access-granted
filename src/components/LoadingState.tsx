@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import bet7kLogo from "@/assets/bet7k-logo.png";
 
 const steps = [
-  { label: "Conectando con servidor Bet7k...", duration: 900 },
-  { label: "Validando sesión de usuario...", duration: 700 },
-  { label: "Aplicando configuración WL...", duration: 800 },
-  { label: "Actualizando permisos de cuenta...", duration: 800 },
+  { label: "Conectando con servidor Bet7k...", duration: 1200 },
+  { label: "Validando sesión de usuario...", duration: 1100 },
+  { label: "Aplicando configuración WL...", duration: 1400 },
+  { label: "Actualizando permisos de cuenta...", duration: 1200 },
+  { label: "Sincronizando privilegios...", duration: 800 },
 ];
 
 export const LoadingState = () => {

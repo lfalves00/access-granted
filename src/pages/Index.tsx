@@ -3,8 +3,9 @@ import { StatusBar } from "@/components/StatusBar";
 import { IdleState } from "@/components/IdleState";
 import { LoadingState } from "@/components/LoadingState";
 import { SuccessState } from "@/components/SuccessState";
+import { PostConfirmState } from "@/components/PostConfirmState";
 
-type AppState = "idle" | "confirm" | "loading" | "success";
+type AppState = "idle" | "confirm" | "loading" | "post-confirm" | "success";
 
 const Index = () => {
   const [state, setState] = useState<AppState>("idle");
@@ -21,9 +22,13 @@ const Index = () => {
     setState("loading");
   }, []);
 
+  const handlePostConfirm = useCallback(() => {
+    setState("success");
+  }, []);
+
   useEffect(() => {
     if (state === "loading") {
-      const timer = setTimeout(() => setState("success"), 3200);
+      const timer = setTimeout(() => setState("post-confirm"), 5700);
       return () => clearTimeout(timer);
     }
   }, [state]);
@@ -39,6 +44,11 @@ const Index = () => {
           </div>
         )}
         {state === "loading" && <LoadingState />}
+        {state === "post-confirm" && (
+          <div className="animate-fade-in">
+            <PostConfirmState onConfirm={handlePostConfirm} />
+          </div>
+        )}
         {state === "success" && <SuccessState />}
       </main>
       <footer className="pb-2 pt-4">
